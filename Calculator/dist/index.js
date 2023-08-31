@@ -1,3 +1,4 @@
+#!//usr/bin/env.node
 import inquirer from 'inquirer';
 import chalkAnimation from "chalk-animation";
 const sleep = () => {
@@ -6,7 +7,7 @@ const sleep = () => {
     });
 };
 async function welcomeScreen() {
-    let title = chalkAnimation.rainbow("Simple Calculator");
+    let title = chalkAnimation.glitch("Simple Calculator");
     await sleep();
     title.stop();
     console.log(` _____________________
