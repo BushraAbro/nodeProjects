@@ -1,10 +1,28 @@
 import inquirer from "inquirer";
+import chalk from 'chalk';
+import chalkAnimation from "chalk-animation";
+
 let score =0;
+
+const sleep =()=> {
+    return new Promise(
+        (res)=>{
+            setTimeout(res,2000);
+    })
+}
+async function welcomeScreen() 
+{
+let title = chalkAnimation.neon(`Number Guessing Game \n`);   
+await sleep(); 
+title.stop();
+}
+
 function scoreboard(){
-console.log(`YOUR SCORE
-*****************
-${score}
-*****************`)
+console.log(chalk.yellowBright(`
+            YOUR SCORE
+        *****************
+                ${score}
+        *****************`))
 }
 function generateNumber(){
     return Math.floor(Math.random()*9);
@@ -12,25 +30,28 @@ function generateNumber(){
 }
 
 async function  getUserInput(){
+    let actualNumber = generateNumber();
+    for(let i =0; i<3; i++){
     const result = await inquirer.prompt(
     [
         {type:"number",
         name:"userGuess",
-    message: "Guess the number? \n"
+    message: "Guess the number \n  "
 }]
 )
-let actualNumber = generateNumber();
-//const answer = 
-if(result.userGuess == generateNumber){
-    console.log(`You have got it right!
-    ************!!!!!!!!!*************`)
-    console.log(actualNumber);
+if(result.userGuess == actualNumber){
+    console.log(chalk.greenBright(`        Congratulations! You have got it right!
+       ***************!!!!!!!!!****************
+    `))
     score++;
+    break;
 }
 else {
-    console.log(`Sorry! you are wrong! Try again next time`);
-    console.log(actualNumber);
+   // console.log(`Sorry! you are wrong! Try again`);
+    console.log(`Wrong! you are left with `+ chalk.bold(` ${3-(i+1)} `)+`attempt(s) \n `);
 }
+}
+console.log(`       The actual Number is `+chalk.bold.blueBright(`${actualNumber}`))
 scoreboard();
 }
 
@@ -47,6 +68,7 @@ async function repeatGame() {
     
 } 
 async function main() {
+    await welcomeScreen();
    await repeatGame();
 }
 main();

@@ -80,7 +80,7 @@ async function getInput() {
     
 } 
 async function  main(){
-  welcomeScreen();
+  await welcomeScreen();
   await repeatCalc();
 }
 main();
